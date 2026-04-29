@@ -12,6 +12,10 @@ import (
 
 func main() {
 
+	if err := config.LoadConfig(config.ConfigPath); err != nil {
+		os.Exit(1)
+	}
+
 	closeLog := logging.SetupLogger()
 	defer closeLog()
 
@@ -36,7 +40,9 @@ func main() {
 		IdleTimeout: time.Duration(config.ConfigData.Server.IdleTimeout) * time.Second,
 	}
 
-	if err := server.ListenAndServe(); err != nil {
+	logging.Logger.Info("Starting Server")
+
+	if err := server.ListenAndServe(); err != http.ErrServerClosed {
 		logging.Logger.Error("Failed to start server", "error", err)
 	}
 }
