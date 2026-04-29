@@ -16,7 +16,10 @@ func main() {
 		os.Exit(1)
 	}
 
-	closeLog := logging.SetupLogger()
+	closeLog, err := logging.SetupLogger();
+	if  err != nil {
+		return
+	}
 	defer closeLog()
 
 	logging.Logger.Info("Logger initialized successfully")

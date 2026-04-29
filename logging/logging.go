@@ -28,11 +28,11 @@ func New() (*slog.Logger, func() error, error) {
 	return logger, func() error { return f.Close() }, nil
 }
 
-func SetupLogger() func() error{
+func SetupLogger() (func() error, error){
 	logger, closeLog, err := New()
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
 	Logger = logger
-	return closeLog
+	return closeLog, nil
 }
