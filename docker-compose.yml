@@ -6,3 +6,6 @@ services:
       - "8080:8080"
     environment:
       - PORT=8080
+    volumes:
+      - ./logging:/app/logging
+    restart: unless-stopped
